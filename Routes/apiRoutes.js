@@ -19,6 +19,7 @@ module.exports= function(app){
     app.post("/api/notes", function(req,res){
         var addNote= req.body;
         //Incremental id for each stored note
+        addNote.id = notes.length.toString()
         addNote.id = id++;
 
         fs.readFile("./db/bd.json", function(err, data){
