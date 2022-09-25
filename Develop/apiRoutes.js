@@ -6,12 +6,13 @@ const fs = require('fs');
 let id = db.length + 1;
 
 module.exports= function(app){
+
+    
     //Get
-    app.get("/api/notes",function(res,res){
-        fs.readFile("./db/db.json", function(req,res){
-            if(err) throw err;
-            // Parse retrived data
-            res.toJSON(JSON.parse(data))
+    app.get("/api/notes",function(req,res){
+        fs.readFile("./db/db.json", function(data){
+            
+            res.json(JSON.parse(data))
         })
     })
 
@@ -22,14 +23,17 @@ module.exports= function(app){
         addNote.id = notes.length.toString()
         addNote.id = id++;
 
-        fs.readFile("./db/db.json", function(err, data){
-            if (err) throw err;
+        fs.readFile("./db/db.json", function(data){
+            
             var note =JSON.parse(data);
             //New note pushed to the body
             note.push(addNote);
 
             fs.writeFile("./db/db.json", JSON.stringify(note), function(err){
-                if(err) throw err;
+                if (err) {
+                    return console.log(err);
+                }
+                console.log("Your note was saved!");
             })
 
             
